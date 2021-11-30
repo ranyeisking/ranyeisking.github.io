@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
+    <title>第一篇博客</title>
     <url>/2021/11/29/%E6%9C%AC%E7%AB%99%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p>在校大学生，难免犯错，谢谢纠正<br>暂无内容</p>
+    <content><![CDATA[<p>暂无内容<br>&lt;%- partial(‘_partial/comment’) %&gt;</p>
 ]]></content>
+      <categories>
+        <category>博客</category>
+      </categories>
   </entry>
 </search>
