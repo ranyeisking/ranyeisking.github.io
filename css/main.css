@@ -1208,7 +1208,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #be74ff;
+  background: #faff3b;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -3061,6 +3061,9 @@ p#div-border-top-purple {
   border-top-width: 0.5em;
   border-radius: 0.3em;
   border-top-color: #9954bb;
+}
+.vpower.txt-right {
+  display: none;
 }
 @-moz-keyframes heartAnimate {
   0%, 100% {

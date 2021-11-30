@@ -215,9 +215,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2021-11-29T22:58:43+08:00"
-              content="2021-11-29" >
-          11-29
+              datetime="2021-11-30T11:31:07+08:00"
+              content="2021-11-30" >
+          11-30
         </time>
       </div>
 
@@ -453,6 +453,34 @@ $(document).ready(function() {
 
   
 
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'EvpwBKLfH2jKd3BPAq2sEJrY-MdYXbMMI',
+      appKey     : 'HhWY2yXsdBu9CDv4Wx6YrbNp',
+      placeholder: "Just go go",
+      avatar     : 'retro',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-CN' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : 'http://wwww.spiderk.games'
+    });
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>
