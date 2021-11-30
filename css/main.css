@@ -1208,7 +1208,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #54ff4e;
+  background: #cdf675;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -3063,6 +3063,9 @@ p#div-border-top-purple {
   border-top-color: #9954bb;
 }
 .vpower.txt-right {
+  display: none;
+}
+.livere-logo-top {
   display: none;
 }
 @-moz-keyframes heartAnimate {
