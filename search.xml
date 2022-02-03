@@ -10,7 +10,33 @@
       </categories>
   </entry>
   <entry>
-    <title>网易云爬虫</title>
+    <title>关于网易云的js逆向爬虫（爬取评论）下</title>
+    <url>/2022/02/03/%E6%9F%90%E6%98%93%E4%BA%91%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8B/</url>
+    <content><![CDATA[<h2 id="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"><a href="#接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章" class="headerlink" title="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"></a>接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章</h2><h3 id="本篇仅说明得到加密参数后的步骤"><a href="#本篇仅说明得到加密参数后的步骤" class="headerlink" title="本篇仅说明得到加密参数后的步骤"></a>本篇仅说明得到加密参数后的步骤</h3><h4 id="1-准备环境：pycharm，包：execjs-requests-csv"><a href="#1-准备环境：pycharm，包：execjs-requests-csv" class="headerlink" title="1.准备环境：pycharm，包：execjs, requests, csv"></a>1.准备环境：pycharm，包：execjs, requests, csv</h4><h4 id="2-具体步骤"><a href="#2-具体步骤" class="headerlink" title="2. 具体步骤:"></a>2. 具体步骤:</h4><ol>
+<li>先介绍一下execjs这个包，这个包用来运行js代码，并获得运行结果，<br>这样我们先在python里面拿到加密参数：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;comment.js&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">	jsgo=execjs.<span class="built_in">compile</span>(f.read())</span><br><span class="line">	data=<span class="string">&#x27;&#123;&quot;rid&quot;:&quot;R_AL_3_37873787&quot;,&quot;threadId&quot;:&quot;R_AL_3_37873787&quot;,&quot;pageNo&quot;:&quot;1&quot;,&quot;pageSize&quot;:&quot;20&quot;,&quot;cursor&quot;:&quot;-1&quot;,&quot;offset&quot;:&quot;0&quot;,&quot;orderType&quot;:&quot;1&quot;,&quot;csrf_token&quot;:&quot;&quot;&#125;&#x27;</span></span><br><span class="line">	res=jsgo.call(<span class="string">&#x27;run&#x27;</span>,data)</span><br><span class="line">	<span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>这里的 <em><strong>run</strong></em> 就是我们在js文件里面编写的run函数，data是我们传入run函数的参数。</p>
+<ol start="2">
+<li>接下来，我们拿到了加密参数就可以直接发起请求了：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s=requests.Session()</span><br><span class="line">s.headers=headers</span><br><span class="line">resp=s.post(url=url,data=key)</span><br></pre></td></tr></table></figure>
+<p>这里要注意一个地方就是，记得把headers自己copy过来<br>然后运行代码观察结果：<br><img src="https://img-blog.csdnimg.cn/e4cbd12debe242c39d9cd2b990a609bc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>不多不少，正好20条，可是，评论不只是20条呀，一定是有某个参数影响了，这时候我们把目光聚集到data:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data=<span class="string">&#x27;&#123;&quot;rid&quot;:&quot;R_AL_3_37873787&quot;,&quot;threadId&quot;:&quot;R_AL_3_37873787&quot;,&quot;pageNo&quot;:&quot;1&quot;,&quot;pageSize&quot;:&quot;20&quot;,&quot;cursor&quot;:&quot;-1&quot;,&quot;offset&quot;:&quot;0&quot;,&quot;orderType&quot;:&quot;1&quot;,&quot;csrf_token&quot;:&quot;&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>很容易看出，这里有个pagesize,和pageno，就是我们的页数和一页多少条，前面的两个 <em><strong>id</strong></em> 就是 对不同的音乐，我们做一下更改（这里也是我为什么单独把data放在放在python而不是放在js里，方便调节更改嘛），然后观察是否有变化：<br><img src="https://img-blog.csdnimg.cn/8b90909aea1548c1809610b9af57de4e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>完美结束</p>
+<ol start="3">
+<li>最后关于网易云的js逆向就结束了，这是我在进入爬虫的第一个实战，整体难度是较容易的，之后网易云反爬和加密更新了我也会对这两篇文章进行更改，有任何错误的地方请指出哦</li>
+</ol>
+]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>js逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于网易的js逆向爬虫（爬取评论）</title>
     <url>/2021/12/15/%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%84%E8%AE%BA%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8A/</url>
     <content><![CDATA[<h2 id="关于网易的js逆向爬虫（爬取评论）"><a href="#关于网易的js逆向爬虫（爬取评论）" class="headerlink" title="关于网易的js逆向爬虫（爬取评论）"></a>关于网易的js逆向爬虫（爬取评论）</h2><p>这是本站的第一篇博客，可能会有很多补不足的地方，后面会持续修改，希望各位看官积极指出错误</p>
 <p> <strong>1. 准备工具：</strong></p>
@@ -73,7 +99,10 @@
 <p>然后带入到run()代码中<br><img src="https://img-blog.csdnimg.cn/1621568359514d518dd518dd7606bb2f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>成功获得加密参数。</p>
 ]]></content>
       <categories>
-        <category>js逆向</category>
+        <category>爬虫</category>
       </categories>
+      <tags>
+        <tag>js逆向</tag>
+      </tags>
   </entry>
 </search>

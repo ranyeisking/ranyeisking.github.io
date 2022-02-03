@@ -192,6 +192,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://spiderk.games/2022/02/03/%E6%9F%90%E6%98%93%E4%BA%91%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://img.duoziwang.com/2018/19/07111648906142.jpg">
+      <meta itemprop="name" content="RGS">
+      <meta itemprop="description" content="这是一只爬虫新手的日记">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CduSpiderk">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/03/%E6%9F%90%E6%98%93%E4%BA%91%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8B/" class="post-title-link" itemprop="url">关于网易云的js逆向爬虫（爬取评论）下</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-03 15:45:25 / 修改时间：15:50:13" itemprop="dateCreated datePublished" datetime="2022-02-03T15:45:25+08:00">2022-02-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">爬虫</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"><a href="#接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章" class="headerlink" title="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"></a>接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章</h2><h3 id="本篇仅说明得到加密参数后的步骤"><a href="#本篇仅说明得到加密参数后的步骤" class="headerlink" title="本篇仅说明得到加密参数后的步骤"></a>本篇仅说明得到加密参数后的步骤</h3><h4 id="1-准备环境：pycharm，包：execjs-requests-csv"><a href="#1-准备环境：pycharm，包：execjs-requests-csv" class="headerlink" title="1.准备环境：pycharm，包：execjs, requests, csv"></a>1.准备环境：pycharm，包：execjs, requests, csv</h4><h4 id="2-具体步骤"><a href="#2-具体步骤" class="headerlink" title="2. 具体步骤:"></a>2. 具体步骤:</h4><ol>
+<li>先介绍一下execjs这个包，这个包用来运行js代码，并获得运行结果，<br>这样我们先在python里面拿到加密参数：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;comment.js&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">	jsgo=execjs.<span class="built_in">compile</span>(f.read())</span><br><span class="line">	data=<span class="string">&#x27;&#123;&quot;rid&quot;:&quot;R_AL_3_37873787&quot;,&quot;threadId&quot;:&quot;R_AL_3_37873787&quot;,&quot;pageNo&quot;:&quot;1&quot;,&quot;pageSize&quot;:&quot;20&quot;,&quot;cursor&quot;:&quot;-1&quot;,&quot;offset&quot;:&quot;0&quot;,&quot;orderType&quot;:&quot;1&quot;,&quot;csrf_token&quot;:&quot;&quot;&#125;&#x27;</span></span><br><span class="line">	res=jsgo.call(<span class="string">&#x27;run&#x27;</span>,data)</span><br><span class="line">	<span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>这里的 <em><strong>run</strong></em> 就是我们在js文件里面编写的run函数，data是我们传入run函数的参数。</p>
+<ol start="2">
+<li>接下来，我们拿到了加密参数就可以直接发起请求了：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s=requests.Session()</span><br><span class="line">s.headers=headers</span><br><span class="line">resp=s.post(url=url,data=key)</span><br></pre></td></tr></table></figure>
+<p>这里要注意一个地方就是，记得把headers自己copy过来<br>然后运行代码观察结果：<br><img src="https://img-blog.csdnimg.cn/e4cbd12debe242c39d9cd2b990a609bc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>不多不少，正好20条，可是，评论不只是20条呀，一定是有某个参数影响了，这时候我们把目光聚集到data:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/03/%E6%9F%90%E6%98%93%E4%BA%91%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://spiderk.games/2021/12/15/%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%84%E8%AE%BA%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -206,7 +290,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/12/15/%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%84%E8%AE%BA%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8A/" class="post-title-link" itemprop="url">网易云爬虫</a>
+            <a href="/2021/12/15/%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%84%E8%AE%BA%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8A/" class="post-title-link" itemprop="url">关于网易的js逆向爬虫（爬取评论）</a>
         </h2>
 
         <div class="post-meta">
@@ -215,17 +299,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-12-15 17:18:30 / 修改时间：17:18:06" itemprop="dateCreated datePublished" datetime="2021-12-15T17:18:30+08:00">2021-12-15</time>
+              <time title="创建时间：2021-12-15 17:18:30" itemprop="dateCreated datePublished" datetime="2021-12-15T17:18:30+08:00">2021-12-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-03 15:50:15" itemprop="dateModified" datetime="2022-02-03T15:50:15+08:00">2022-02-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/js%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">js逆向</span></a>
+                  <a href="/categories/%E7%88%AC%E8%99%AB/" itemprop="url" rel="index"><span itemprop="name">爬虫</span></a>
                 </span>
             </span>
 
@@ -429,7 +519,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -438,6 +528,12 @@
           
         <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -471,7 +567,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
