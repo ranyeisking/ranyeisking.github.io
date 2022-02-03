@@ -13,7 +13,7 @@
     <title>关于网易云的js逆向爬虫（爬取评论）下</title>
     <url>/2022/02/03/%E6%9F%90%E6%98%93%E4%BA%91%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8B/</url>
     <content><![CDATA[<h2 id="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"><a href="#接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章" class="headerlink" title="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"></a>接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章</h2><h3 id="本篇仅说明得到加密参数后的步骤"><a href="#本篇仅说明得到加密参数后的步骤" class="headerlink" title="本篇仅说明得到加密参数后的步骤"></a>本篇仅说明得到加密参数后的步骤</h3><h4 id="1-准备环境：pycharm，包：execjs-requests-csv"><a href="#1-准备环境：pycharm，包：execjs-requests-csv" class="headerlink" title="1.准备环境：pycharm，包：execjs, requests, csv"></a>1.准备环境：pycharm，包：execjs, requests, csv</h4><h4 id="2-具体步骤"><a href="#2-具体步骤" class="headerlink" title="2. 具体步骤:"></a>2. 具体步骤:</h4><ol>
-<li>先介绍一下execjs这个包，这个包用来运行js代码，并获得运行结果，<br>这样我们先在python里面拿到加密参数：</li>
+<li>先介绍一下execjs这个包，这个包用来运行js代码，并获得运行结果，<br>这样我们先在python里面拿到加密参数：<br>&lt; !– more –&gt;   </li>
 </ol>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;comment.js&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">	jsgo=execjs.<span class="built_in">compile</span>(f.read())</span><br><span class="line">	data=<span class="string">&#x27;&#123;&quot;rid&quot;:&quot;R_AL_3_37873787&quot;,&quot;threadId&quot;:&quot;R_AL_3_37873787&quot;,&quot;pageNo&quot;:&quot;1&quot;,&quot;pageSize&quot;:&quot;20&quot;,&quot;cursor&quot;:&quot;-1&quot;,&quot;offset&quot;:&quot;0&quot;,&quot;orderType&quot;:&quot;1&quot;,&quot;csrf_token&quot;:&quot;&quot;&#125;&#x27;</span></span><br><span class="line">	res=jsgo.call(<span class="string">&#x27;run&#x27;</span>,data)</span><br><span class="line">	<span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 <p>这里的 <em><strong>run</strong></em> 就是我们在js文件里面编写的run函数，data是我们传入run函数的参数。</p>
@@ -46,8 +46,7 @@
 <li><em>node.js</em></li>
 <li><em>任意浏览器（推荐谷歌或者Edge）</em></li>
 </ul>
-<p>做好这些后要保证电脑上能运行python和Javascript</p>
-<p><strong>2. 知识储备：</strong></p>
+<p>做好这些后要保证电脑上能运行python和Javascript<br>&lt; !– more –&gt;<br><strong>2. 知识储备：</strong></p>
 <ul>
 <li><em>python对网页请求过程</em></li>
 <li><em>可以忽略的少量JS语法基础</em></li>

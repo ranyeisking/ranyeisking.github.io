@@ -217,7 +217,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-02-03 15:45:25 / 修改时间：15:50:13" itemprop="dateCreated datePublished" datetime="2022-02-03T15:45:25+08:00">2022-02-03</time>
+              <time title="创建时间：2022-02-03 15:45:25 / 修改时间：16:18:41" itemprop="dateCreated datePublished" datetime="2022-02-03T15:45:25+08:00">2022-02-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -241,7 +241,7 @@
 
       
           <h2 id="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"><a href="#接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章" class="headerlink" title="接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章"></a>接着上一篇破解加密，接下来还有最后部分，没有看过上一篇文章的朋友可以先去看一下上一篇文章</h2><h3 id="本篇仅说明得到加密参数后的步骤"><a href="#本篇仅说明得到加密参数后的步骤" class="headerlink" title="本篇仅说明得到加密参数后的步骤"></a>本篇仅说明得到加密参数后的步骤</h3><h4 id="1-准备环境：pycharm，包：execjs-requests-csv"><a href="#1-准备环境：pycharm，包：execjs-requests-csv" class="headerlink" title="1.准备环境：pycharm，包：execjs, requests, csv"></a>1.准备环境：pycharm，包：execjs, requests, csv</h4><h4 id="2-具体步骤"><a href="#2-具体步骤" class="headerlink" title="2. 具体步骤:"></a>2. 具体步骤:</h4><ol>
-<li>先介绍一下execjs这个包，这个包用来运行js代码，并获得运行结果，<br>这样我们先在python里面拿到加密参数：</li>
+<li>先介绍一下execjs这个包，这个包用来运行js代码，并获得运行结果，<br>这样我们先在python里面拿到加密参数：<br>&lt; !– more –&gt;   </li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;comment.js&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">	jsgo=execjs.<span class="built_in">compile</span>(f.read())</span><br><span class="line">	data=<span class="string">&#x27;&#123;&quot;rid&quot;:&quot;R_AL_3_37873787&quot;,&quot;threadId&quot;:&quot;R_AL_3_37873787&quot;,&quot;pageNo&quot;:&quot;1&quot;,&quot;pageSize&quot;:&quot;20&quot;,&quot;cursor&quot;:&quot;-1&quot;,&quot;offset&quot;:&quot;0&quot;,&quot;orderType&quot;:&quot;1&quot;,&quot;csrf_token&quot;:&quot;&quot;&#125;&#x27;</span></span><br><span class="line">	res=jsgo.call(<span class="string">&#x27;run&#x27;</span>,data)</span><br><span class="line">	<span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 <p>这里的 <em><strong>run</strong></em> 就是我们在js文件里面编写的run函数，data是我们传入run函数的参数。</p>
@@ -307,7 +307,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-03 15:50:15" itemprop="dateModified" datetime="2022-02-03T15:50:15+08:00">2022-02-03</time>
+                <time title="修改时间：2022-02-03 16:18:29" itemprop="dateModified" datetime="2022-02-03T16:18:29+08:00">2022-02-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -338,8 +338,7 @@
 <li><em>node.js</em></li>
 <li><em>任意浏览器（推荐谷歌或者Edge）</em></li>
 </ul>
-<p>做好这些后要保证电脑上能运行python和Javascript</p>
-<p><strong>2. 知识储备：</strong></p>
+<p>做好这些后要保证电脑上能运行python和Javascript<br>&lt; !– more –&gt;<br><strong>2. 知识储备：</strong></p>
 <ul>
 <li><em>python对网页请求过程</em></li>
 <li><em>可以忽略的少量JS语法基础</em></li>
@@ -347,6 +346,7 @@
 <p><strong>3. 开始进行网页分析</strong><br>网址：<a target="_blank" rel="noopener" href="https://music.163.com/#/discover/toplist?id=3778678">https://music.163.com/#/discover/toplist?id=3778678</a>（这是网易云热歌榜的评论爬取，网易云的无论是音乐还是评论还是其他的，加密代码都是一样的，仅以此为代表，可以稍加修改爬取不同内容）<br>进入网站，然后直接F12，然后点击<em>网络</em>，再点<em>刷新</em>，点击只查看<em>Fetch/XHR</em>，如下图所示：<br><img src="https://img-blog.csdnimg.cn/2be1281fcf654c7c90c587fa424241f9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16"><br>接着通过 <em>预览</em> 查看文件的内容，定位到其中这个 <strong>get…</strong> 文件 ，，如图：<br><img src="https://img-blog.csdnimg.cn/41cf01588ae3461eab982c3861e07f1b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16"><br>再查看标头，看里面的请求标头，嗯。。。。。都是正常参数，没有疑似加密的参数</p>
 <p>还没完，请求标头中告诉我们，这是一个 <strong>POST</strong> 请求，所以继续查看提供的表单数据</p>
 <p>点击 <strong>payload</strong><br><img src="https://img-blog.csdnimg.cn/edf21e23f6d74ed8a66f0b9fd0dfafc0.png" alt="POST请求"><br> <strong>payload</strong> 里面有连个参数，分别是<strong>params</strong>和<strong>encSecKey</strong>，一看就知道这是加密参数，既然如此我们进入他的发起程序找到加密位置进行破解</p>
+<p>点击进入<strong>发起程序</strong>   如图：<br><img src="https://img-blog.csdnimg.cn/3d9ee8a1f609476ba1e9c86199829d28.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>先点击进入第一个，点击左下角的 <strong>{ }</strong> 对代码增加可读性，然后对代码中蓝色条所在一行打上断点，<br>重复，对前五个都进行相同操作。<br><img src="https://img-blog.csdnimg.cn/b986e8885ba84a1fa633c8116834215b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>点击刷新，观察出现的提示参数，如图：<br><img src="https://img-blog.csdnimg.cn/6f1818627a7f4543830307f4665aa2c5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>发现我们的需要的加密参数在这里，接下来观察如何生成的，如上图，我们注意 <strong>bum2x</strong> 这个参数，我们的加密参数都来自这个 <strong>bum2x</strong> ，在上图 <strong>13413</strong> 这一行当中，生成的方式是</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/12/15/%E7%BD%91%E6%98%93%E4%BA%91%E8%AF%84%E8%AE%BA%E7%88%AC%E8%99%AB%EF%BC%88JS%E9%80%86%E5%90%91%EF%BC%89%E4%B8%8A/#more" rel="contents">
