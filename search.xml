@@ -4,9 +4,25 @@
     <title>第一篇博客</title>
     <url>/2021/11/29/%E6%9C%AC%E7%AB%99%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<p>暂无内容</p>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script> 
-]]></content>
+<section class="post-full-comments">
+
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css&quot;&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;gitalk-container&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+    var gitalk = new Gitalk(&#123;
+        clientID: &#39;Iv1.6835913aa15341fe&#39;,
+        clientSecret: &#39;6b9bda5fe457ad71fa15b72e3206ca2ac6f54cf4&#39;,
+        repo: &#39;comments&#39;,
+        owner: &#39;ranyeisking&#39;,
+        admin: [&#39;ranyeisking&#39;],
+        id: &#39;&#123;&#123;comment_id&#125;&#125;&#39;,
+        distractionFreeMode: false
+    &#125;);
+    gitalk.render(&#39;gitalk-container&#39;);
+&lt;/script&gt;
+</code></pre>
+</section>]]></content>
       <categories>
         <category>博客</category>
       </categories>
