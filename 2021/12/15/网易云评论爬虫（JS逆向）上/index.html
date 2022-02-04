@@ -612,7 +612,14 @@
 <p>什么都没有，所以我们不知道是加载的哪个文件的加密参数，<br><img src="https://img-blog.csdnimg.cn/fe0060d4039c4e00898d0662ed48de07.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_14,color_FFFFFF,t_70,g_se,x_16" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/fe0060d4039c4e00898d0662ed48de07.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_14,color_FFFFFF,t_70,g_se,x_16" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="在这里插入图片描述"><br>这里除了batch都有加密参数，我们需要一个一个获得参数，再和文件相对应：<br><img src="https://img-blog.csdnimg.cn/7a17345b8a7c43ef98e46b3c9c87e298.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/7a17345b8a7c43ef98e46b3c9c87e298.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="在这里插入图片描述"><br>照这样，每个对应起来，还可以发现，只有第一个dd参数发生改变，其他三个是不变的<br>我们找到我们爬取文件的dd:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&#123;&quot;</span>rid<span class="string">&quot;:&quot;</span>A_PL_0_3778678<span class="string">&quot;,&quot;</span>threadId<span class="string">&quot;:&quot;</span>A_PL_0_3778678<span class="string">&quot;,&quot;</span>pageNo<span class="string">&quot;:&quot;</span><span class="number">1</span><span class="string">&quot;,&quot;</span>pageSize<span class="string">&quot;:&quot;</span><span class="number">20</span><span class="string">&quot;,&quot;</span>cursor<span class="string">&quot;:&quot;</span>-<span class="number">1</span><span class="string">&quot;,&quot;</span>offset<span class="string">&quot;:&quot;</span><span class="number">0</span><span class="string">&quot;,&quot;</span>orderType<span class="string">&quot;:&quot;</span><span class="number">1</span><span class="string">&quot;,&quot;</span>csrf_token<span class="string">&quot;:&quot;</span><span class="string">&quot;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
 <p>然后带入到run()代码中<br><img src="https://img-blog.csdnimg.cn/1621568359514d518dd518dd7606bb2f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" class="lazyload placeholder" data-srcset="https://img-blog.csdnimg.cn/1621568359514d518dd518dd7606bb2f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAUi43NDM=,size_20,color_FFFFFF,t_70,g_se,x_16" srcset="https://img2.baidu.com/it/u=2037979560,2772131037&fm=26&fmt=auto&gp=0.jpg" alt="在这里插入图片描述"><br>成功获得加密参数。</p>
-
+<script src="https://utteranc.es/client.js"
+        repo="ranyeisking/comments"
+        issue-term="pathname"
+        label="💬comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
       </div>
       <div class="post-tags-categories">
         
@@ -686,7 +693,6 @@
         暂无内容
 
 
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https:
       </div> -->
     </a>
   </div>
@@ -805,19 +811,8 @@
 
   <div id="myComment">
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
-<div id="gitalk-container"></div>
+      <div id="gitment-container"></div>
 
-<style>
-    .gt-container .gt-meta {
-        z-index: 2;
-    }
-    .gt-container .gt-header-comment {
-        width:100%;
-        box-sizing: border-box;
-        margin-left: 0;
-    }
-</style>
     
   </div>
 
@@ -1491,27 +1486,68 @@
 <!-- 评论所需js -->
 
   
-    <script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
-<script type="text/javascript">
-  comment_el = '#gitalk-container';
-  load_gitalk = function () {
+    <script type="text/javascript">
+  var utteranceCommon = {};
+
+  function check_utterance() {
+    let isDark = JSON.parse(localStorage.getItem('dark')) || JSON.parse('false');
+    if (isDark) {
+      utteranceCommon.Theme = 'github-dark';
+    } else {
+      utteranceCommon.Theme = 'github-light';
+    }
+
+    return document.getElementById("gitment-container");
+  }
+  comment_el = '#gitment-container';
+  load_utterance = function () {
     if ($(comment_el).length) {
-      var gitalk = new Gitalk({
-        clientID: 'Iv1.6835913aa15341fe',
-        clientSecret: 'ef13340603f54c980e868979bba152b472a00bb6',
-        id: window.location.pathname,
-        repo: 'comments',
-        owner: 'ranyeisking',
-        admin: ['ranyeisking']
-      })
-      gitalk.render('gitalk-container')
+      // 匿名函数，防止污染全局变量
+      const HEAD = check_utterance();
+
+      var utterances = document.createElement('script');
+      utterances.type = 'text/javascript';
+      utterances.async = true;
+      utterances.setAttribute('issue-term', 'pathname')
+      utterances.setAttribute('theme', utteranceCommon.Theme)
+      utterances.setAttribute('repo', 'ranyeisking/ranyeisking.github.io')
+      utterances.crossorigin = 'anonymous';
+      utterances.src = 'https://utteranc.es/client.js';
+      // content 是要插入评论的地方
+      document.getElementById('gitment-container').appendChild(utterances);
+
     }
   }
-  $(document).ready(load_gitalk);
+
+  function dark_utterance() {
+    const HEAD = check_utterance();
+    if (!HEAD) return;
+    const message = {
+      type: 'set-theme',
+      theme: utteranceCommon.Theme
+    };
+    const utteranceIframe = document.querySelector('iframe');
+    utteranceIframe.contentWindow.postMessage(message, 'https://utteranc.es');
+  }
+
+  $(document).ready(load_utterance);
   document.addEventListener('pjax:complete', function () {
-    load_gitalk();
+    load_utterance();
   });
+
+  $('.dark').click(function () {
+    setTimeout(() => {
+      dark_utterance();
+    });
+  })
+
 </script>
+
+<style>
+  .utterances {
+    max-width: inherit !important;
+  }
+</style>
   
 
 
